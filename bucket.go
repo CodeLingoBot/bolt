@@ -125,7 +125,7 @@ func (b *Bucket) Bucket(name []byte) *Bucket {
 	return child
 }
 
-// Helper method that re-interprets a sub-bucket value
+// openBucket; Helper method that re-interprets a sub-bucket value
 // from a parent into a Bucket
 func (b *Bucket) openBucket(value []byte) *Bucket {
 	var child = newBucket(b.tx)
@@ -394,7 +394,7 @@ func (b *Bucket) ForEach(fn func(k, v []byte) error) error {
 	return nil
 }
 
-// Stat returns stats on a bucket.
+// Stats returns stats on a bucket.
 func (b *Bucket) Stats() BucketStats {
 	var s, subStats BucketStats
 	pageSize := b.tx.db.pageSize
@@ -607,7 +607,7 @@ func (b *Bucket) inlineable() bool {
 	return true
 }
 
-// Returns the maximum total size of a bucket to make it a candidate for inlining.
+// maxInlineBucketSize returns the maximum total size of a bucket to make it a candidate for inlining.
 func (b *Bucket) maxInlineBucketSize() int {
 	return b.tx.db.pageSize / 4
 }

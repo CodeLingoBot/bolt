@@ -11,7 +11,7 @@ import (
 	"github.com/boltdb/bolt"
 )
 
-// Ensure that committing a closed transaction returns an error.
+// TestTx_Commit_ErrTxClosed ensures that committing a closed transaction returns an error.
 func TestTx_Commit_ErrTxClosed(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -33,7 +33,7 @@ func TestTx_Commit_ErrTxClosed(t *testing.T) {
 	}
 }
 
-// Ensure that rolling back a closed transaction returns an error.
+// TestTx_Rollback_ErrTxClosed ensures that rolling back a closed transaction returns an error.
 func TestTx_Rollback_ErrTxClosed(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -51,7 +51,7 @@ func TestTx_Rollback_ErrTxClosed(t *testing.T) {
 	}
 }
 
-// Ensure that committing a read-only transaction returns an error.
+// TestTx_Commit_ErrTxNotWritable ensures that committing a read-only transaction returns an error.
 func TestTx_Commit_ErrTxNotWritable(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -64,7 +64,7 @@ func TestTx_Commit_ErrTxNotWritable(t *testing.T) {
 	}
 }
 
-// Ensure that a transaction can retrieve a cursor on the root bucket.
+// TestTx_Cursor ensures that a transaction can retrieve a cursor on the root bucket.
 func TestTx_Cursor(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -102,7 +102,7 @@ func TestTx_Cursor(t *testing.T) {
 	}
 }
 
-// Ensure that creating a bucket with a read-only transaction returns an error.
+// TestTx_CreateBucket_ErrTxNotWritable ensures that creating a bucket with a read-only transaction returns an error.
 func TestTx_CreateBucket_ErrTxNotWritable(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -117,7 +117,7 @@ func TestTx_CreateBucket_ErrTxNotWritable(t *testing.T) {
 	}
 }
 
-// Ensure that creating a bucket on a closed transaction returns an error.
+// TestTx_CreateBucket_ErrTxClosed ensures that creating a bucket on a closed transaction returns an error.
 func TestTx_CreateBucket_ErrTxClosed(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -134,7 +134,7 @@ func TestTx_CreateBucket_ErrTxClosed(t *testing.T) {
 	}
 }
 
-// Ensure that a Tx can retrieve a bucket.
+// TestTx_Bucket ensures that a Tx can retrieve a bucket.
 func TestTx_Bucket(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -151,7 +151,7 @@ func TestTx_Bucket(t *testing.T) {
 	}
 }
 
-// Ensure that a Tx retrieving a non-existent key returns nil.
+// TestTx_Get_NotFound ensures that a Tx retrieving a non-existent key returns nil.
 func TestTx_Get_NotFound(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -173,7 +173,7 @@ func TestTx_Get_NotFound(t *testing.T) {
 	}
 }
 
-// Ensure that a bucket can be created and retrieved.
+// TestTx_CreateBucket ensures that a bucket can be created and retrieved.
 func TestTx_CreateBucket(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -202,7 +202,7 @@ func TestTx_CreateBucket(t *testing.T) {
 	}
 }
 
-// Ensure that a bucket can be created if it doesn't already exist.
+// TestTx_CreateBucketIfNotExists ensures that a bucket can be created if it doesn't already exist.
 func TestTx_CreateBucketIfNotExists(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -237,7 +237,7 @@ func TestTx_CreateBucketIfNotExists(t *testing.T) {
 	}
 }
 
-// Ensure transaction returns an error if creating an unnamed bucket.
+// TestTx_CreateBucketIfNotExists_ErrBucketNameRequired ensures transaction returns an error if creating an unnamed bucket.
 func TestTx_CreateBucketIfNotExists_ErrBucketNameRequired(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -256,7 +256,7 @@ func TestTx_CreateBucketIfNotExists_ErrBucketNameRequired(t *testing.T) {
 	}
 }
 
-// Ensure that a bucket cannot be created twice.
+// TestTx_CreateBucket_ErrBucketExists ensures that a bucket cannot be created twice.
 func TestTx_CreateBucket_ErrBucketExists(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -282,7 +282,7 @@ func TestTx_CreateBucket_ErrBucketExists(t *testing.T) {
 	}
 }
 
-// Ensure that a bucket is created with a non-blank name.
+// TestTx_CreateBucket_ErrBucketNameRequired ensures that a bucket is created with a non-blank name.
 func TestTx_CreateBucket_ErrBucketNameRequired(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -296,7 +296,7 @@ func TestTx_CreateBucket_ErrBucketNameRequired(t *testing.T) {
 	}
 }
 
-// Ensure that a bucket can be deleted.
+// TestTx_DeleteBucket ensures that a bucket can be deleted.
 func TestTx_DeleteBucket(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -343,7 +343,7 @@ func TestTx_DeleteBucket(t *testing.T) {
 	}
 }
 
-// Ensure that deleting a bucket on a closed transaction returns an error.
+// TestTx_DeleteBucket_ErrTxClosed ensures that deleting a bucket on a closed transaction returns an error.
 func TestTx_DeleteBucket_ErrTxClosed(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -359,7 +359,7 @@ func TestTx_DeleteBucket_ErrTxClosed(t *testing.T) {
 	}
 }
 
-// Ensure that deleting a bucket with a read-only transaction returns an error.
+// TestTx_DeleteBucket_ReadOnly ensures that deleting a bucket with a read-only transaction returns an error.
 func TestTx_DeleteBucket_ReadOnly(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -373,7 +373,7 @@ func TestTx_DeleteBucket_ReadOnly(t *testing.T) {
 	}
 }
 
-// Ensure that nothing happens when deleting a bucket that doesn't exist.
+// TestTx_DeleteBucket_NotFound ensures that nothing happens when deleting a bucket that doesn't exist.
 func TestTx_DeleteBucket_NotFound(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -387,7 +387,7 @@ func TestTx_DeleteBucket_NotFound(t *testing.T) {
 	}
 }
 
-// Ensure that no error is returned when a tx.ForEach function does not return
+// TestTx_ForEach_NoError ensures that no error is returned when a tx.ForEach function does not return
 // an error.
 func TestTx_ForEach_NoError(t *testing.T) {
 	db := MustOpenDB()
@@ -412,7 +412,7 @@ func TestTx_ForEach_NoError(t *testing.T) {
 	}
 }
 
-// Ensure that an error is returned when a tx.ForEach function returns an error.
+// TestTx_ForEach_WithError ensures that an error is returned when a tx.ForEach function returns an error.
 func TestTx_ForEach_WithError(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -437,7 +437,7 @@ func TestTx_ForEach_WithError(t *testing.T) {
 	}
 }
 
-// Ensure that Tx commit handlers are called after a transaction successfully commits.
+// TestTx_OnCommit ensures that Tx commit handlers are called after a transaction successfully commits.
 func TestTx_OnCommit(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -457,7 +457,7 @@ func TestTx_OnCommit(t *testing.T) {
 	}
 }
 
-// Ensure that Tx commit handlers are NOT called after a transaction rolls back.
+// TestTx_OnCommit_Rollback ensures that Tx commit handlers are NOT called after a transaction rolls back.
 func TestTx_OnCommit_Rollback(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -477,7 +477,7 @@ func TestTx_OnCommit_Rollback(t *testing.T) {
 	}
 }
 
-// Ensure that the database can be copied to a file path.
+// TestTx_CopyFile ensures that the database can be copied to a file path.
 func TestTx_CopyFile(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -548,7 +548,7 @@ func (f *failWriter) Write(p []byte) (n int, err error) {
 	return n, err
 }
 
-// Ensure that Copy handles write errors right.
+// TestTx_CopyFile_Error_Meta ensures that Copy handles write errors right.
 func TestTx_CopyFile_Error_Meta(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -575,7 +575,7 @@ func TestTx_CopyFile_Error_Meta(t *testing.T) {
 	}
 }
 
-// Ensure that Copy handles write errors right.
+// TestTx_CopyFile_Error_Normal ensures that Copy handles write errors right.
 func TestTx_CopyFile_Error_Normal(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()

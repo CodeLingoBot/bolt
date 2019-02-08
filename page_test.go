@@ -7,7 +7,7 @@ import (
 	"testing/quick"
 )
 
-// Ensure that the page type can be returned in human readable format.
+// TestPage_typ ensures that the page type can be returned in human readable format.
 func TestPage_typ(t *testing.T) {
 	if typ := (&page{flags: branchPageFlag}).typ(); typ != "branch" {
 		t.Fatalf("exp=branch; got=%v", typ)
@@ -26,7 +26,7 @@ func TestPage_typ(t *testing.T) {
 	}
 }
 
-// Ensure that the hexdump debugging function doesn't blow up.
+// TestPage_dump ensures that the hexdump debugging function doesn't blow up.
 func TestPage_dump(t *testing.T) {
 	(&page{id: 256}).hexdump(16)
 }

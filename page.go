@@ -81,7 +81,7 @@ func (p *page) branchPageElements() []branchPageElement {
 	return ((*[0x7FFFFFF]branchPageElement)(unsafe.Pointer(&p.ptr)))[:]
 }
 
-// dump writes n bytes of the page to STDERR as hex output.
+// hexdump writes n bytes of the page to STDERR as hex output.
 func (p *page) hexdump(n int) {
 	buf := (*[maxAllocSize]byte)(unsafe.Pointer(p))[:n]
 	fmt.Fprintf(os.Stderr, "%x\n", buf)

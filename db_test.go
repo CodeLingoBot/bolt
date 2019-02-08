@@ -49,7 +49,7 @@ type meta struct {
 	checksum uint64
 }
 
-// Ensure that a database can be opened without error.
+// TestOpen ensures that a database can be opened without error.
 func TestOpen(t *testing.T) {
 	path := tempfile()
 	db, err := bolt.Open(path, 0666, nil)
@@ -68,7 +68,7 @@ func TestOpen(t *testing.T) {
 	}
 }
 
-// Ensure that opening a database with a blank path returns an error.
+// TestOpen_ErrPathRequired ensures that opening a database with a blank path returns an error.
 func TestOpen_ErrPathRequired(t *testing.T) {
 	_, err := bolt.Open("", 0666, nil)
 	if err == nil {
@@ -76,7 +76,7 @@ func TestOpen_ErrPathRequired(t *testing.T) {
 	}
 }
 
-// Ensure that opening a database with a bad path returns an error.
+// TestOpen_ErrNotExists ensures that opening a database with a bad path returns an error.
 func TestOpen_ErrNotExists(t *testing.T) {
 	_, err := bolt.Open(filepath.Join(tempfile(), "bad-path"), 0666, nil)
 	if err == nil {
@@ -84,7 +84,7 @@ func TestOpen_ErrNotExists(t *testing.T) {
 	}
 }
 
-// Ensure that opening a file that is not a Bolt database returns ErrInvalid.
+// TestOpen_ErrInvalid ensures that opening a file that is not a Bolt database returns ErrInvalid.
 func TestOpen_ErrInvalid(t *testing.T) {
 	path := tempfile()
 
@@ -105,7 +105,7 @@ func TestOpen_ErrInvalid(t *testing.T) {
 	}
 }
 
-// Ensure that opening a file with two invalid versions returns ErrVersionMismatch.
+// TestOpen_ErrVersionMismatch ensures that opening a file with two invalid versions returns ErrVersionMismatch.
 func TestOpen_ErrVersionMismatch(t *testing.T) {
 	if pageSize != os.Getpagesize() {
 		t.Skip("page size mismatch")
@@ -142,7 +142,7 @@ func TestOpen_ErrVersionMismatch(t *testing.T) {
 	}
 }
 
-// Ensure that opening a file with two invalid checksums returns ErrChecksum.
+// TestOpen_ErrChecksum ensures that opening a file with two invalid checksums returns ErrChecksum.
 func TestOpen_ErrChecksum(t *testing.T) {
 	if pageSize != os.Getpagesize() {
 		t.Skip("page size mismatch")
@@ -179,7 +179,7 @@ func TestOpen_ErrChecksum(t *testing.T) {
 	}
 }
 
-// Ensure that opening a database does not increase its size.
+// TestOpen_Size ensures that opening a database does not increase its size.
 // https://github.com/boltdb/bolt/issues/291
 func TestOpen_Size(t *testing.T) {
 	// Open a data file.
@@ -239,7 +239,7 @@ func TestOpen_Size(t *testing.T) {
 	}
 }
 
-// Ensure that opening a database beyond the max step size does not increase its size.
+// TestOpen_Size_Large ensures that opening a database beyond the max step size does not increase its size.
 // https://github.com/boltdb/bolt/issues/303
 func TestOpen_Size_Large(t *testing.T) {
 	if testing.Short() {
@@ -307,7 +307,7 @@ func TestOpen_Size_Large(t *testing.T) {
 	}
 }
 
-// Ensure that a re-opened database is consistent.
+// TestOpen_Check ensures that a re-opened database is consistent.
 func TestOpen_Check(t *testing.T) {
 	path := tempfile()
 
@@ -334,12 +334,12 @@ func TestOpen_Check(t *testing.T) {
 	}
 }
 
-// Ensure that write errors to the meta file handler during initialization are returned.
+// TestOpen_MetaInitWriteError ensures that write errors to the meta file handler during initialization are returned.
 func TestOpen_MetaInitWriteError(t *testing.T) {
 	t.Skip("pending")
 }
 
-// Ensure that a database that is too small returns an error.
+// TestOpen_FileTooSmall ensures that a database that is too small returns an error.
 func TestOpen_FileTooSmall(t *testing.T) {
 	path := tempfile()
 
@@ -422,7 +422,7 @@ func TestDB_Open_InitialMmapSize(t *testing.T) {
 	}
 }
 
-// Ensure that a database cannot open a transaction when it's not open.
+// TestDB_Begin_ErrDatabaseNotOpen ensures that a database cannot open a transaction when it's not open.
 func TestDB_Begin_ErrDatabaseNotOpen(t *testing.T) {
 	var db bolt.DB
 	if _, err := db.Begin(false); err != bolt.ErrDatabaseNotOpen {
@@ -430,7 +430,7 @@ func TestDB_Begin_ErrDatabaseNotOpen(t *testing.T) {
 	}
 }
 
-// Ensure that a read-write transaction can be retrieved.
+// TestDB_BeginRW ensures that a read-write transaction can be retrieved.
 func TestDB_BeginRW(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -453,7 +453,7 @@ func TestDB_BeginRW(t *testing.T) {
 	}
 }
 
-// Ensure that opening a transaction while the DB is closed returns an error.
+// TestDB_BeginRW_Closed ensures that opening a transaction while the DB is closed returns an error.
 func TestDB_BeginRW_Closed(t *testing.T) {
 	var db bolt.DB
 	if _, err := db.Begin(true); err != bolt.ErrDatabaseNotOpen {
@@ -464,7 +464,7 @@ func TestDB_BeginRW_Closed(t *testing.T) {
 func TestDB_Close_PendingTx_RW(t *testing.T) { testDB_Close_PendingTx(t, true) }
 func TestDB_Close_PendingTx_RO(t *testing.T) { testDB_Close_PendingTx(t, false) }
 
-// Ensure that a database cannot close while transactions are open.
+// testDB_Close_PendingTx ensures that a database cannot close while transactions are open.
 func testDB_Close_PendingTx(t *testing.T, writable bool) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -506,7 +506,7 @@ func testDB_Close_PendingTx(t *testing.T, writable bool) {
 	}
 }
 
-// Ensure a database can provide a transactional block.
+// TestDB_Update ensures a database can provide a transactional block.
 func TestDB_Update(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -542,7 +542,7 @@ func TestDB_Update(t *testing.T) {
 	}
 }
 
-// Ensure a closed database returns an error while running a transaction block
+// TestDB_Update_Closed ensures a closed database returns an error while running a transaction block
 func TestDB_Update_Closed(t *testing.T) {
 	var db bolt.DB
 	if err := db.Update(func(tx *bolt.Tx) error {
@@ -555,7 +555,7 @@ func TestDB_Update_Closed(t *testing.T) {
 	}
 }
 
-// Ensure a panic occurs while trying to commit a managed transaction.
+// TestDB_Update_ManualCommit ensures a panic occurs while trying to commit a managed transaction.
 func TestDB_Update_ManualCommit(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -581,7 +581,7 @@ func TestDB_Update_ManualCommit(t *testing.T) {
 	}
 }
 
-// Ensure a panic occurs while trying to rollback a managed transaction.
+// TestDB_Update_ManualRollback ensures a panic occurs while trying to rollback a managed transaction.
 func TestDB_Update_ManualRollback(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -607,7 +607,7 @@ func TestDB_Update_ManualRollback(t *testing.T) {
 	}
 }
 
-// Ensure a panic occurs while trying to commit a managed transaction.
+// TestDB_View_ManualCommit ensures a panic occurs while trying to commit a managed transaction.
 func TestDB_View_ManualCommit(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -633,7 +633,7 @@ func TestDB_View_ManualCommit(t *testing.T) {
 	}
 }
 
-// Ensure a panic occurs while trying to rollback a managed transaction.
+// TestDB_View_ManualRollback ensures a panic occurs while trying to rollback a managed transaction.
 func TestDB_View_ManualRollback(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -659,7 +659,7 @@ func TestDB_View_ManualRollback(t *testing.T) {
 	}
 }
 
-// Ensure a write transaction that panics does not hold open locks.
+// TestDB_Update_Panic ensures a write transaction that panics does not hold open locks.
 func TestDB_Update_Panic(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -703,7 +703,7 @@ func TestDB_Update_Panic(t *testing.T) {
 	}
 }
 
-// Ensure a database can return an error through a read-only transactional block.
+// TestDB_View_Error ensures a database can return an error through a read-only transactional block.
 func TestDB_View_Error(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -715,7 +715,7 @@ func TestDB_View_Error(t *testing.T) {
 	}
 }
 
-// Ensure a read transaction that panics does not hold open locks.
+// TestDB_View_Panic ensures a read transaction that panics does not hold open locks.
 func TestDB_View_Panic(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -758,7 +758,7 @@ func TestDB_View_Panic(t *testing.T) {
 	}
 }
 
-// Ensure that DB stats can be returned.
+// TestDB_Stats ensures that DB stats can be returned.
 func TestDB_Stats(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -779,7 +779,7 @@ func TestDB_Stats(t *testing.T) {
 	}
 }
 
-// Ensure that database pages are in expected order and type.
+// TestDB_Consistency ensures that database pages are in expected order and type.
 func TestDB_Consistency(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -847,7 +847,7 @@ func TestDB_Consistency(t *testing.T) {
 	}
 }
 
-// Ensure that DB stats can be subtracted from one another.
+// TestDBStats_Sub ensures that DB stats can be subtracted from one another.
 func TestDBStats_Sub(t *testing.T) {
 	var a, b bolt.Stats
 	a.TxStats.PageCount = 3
@@ -865,7 +865,7 @@ func TestDBStats_Sub(t *testing.T) {
 	}
 }
 
-// Ensure two functions can perform updates in a single batch.
+// TestDB_Batch ensures two functions can perform updates in a single batch.
 func TestDB_Batch(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()

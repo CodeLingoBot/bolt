@@ -8,7 +8,7 @@ import (
 	"unsafe"
 )
 
-// Ensure that a page is added to a transaction's freelist.
+// TestFreelist_free ensures that a page is added to a transaction's freelist.
 func TestFreelist_free(t *testing.T) {
 	f := newFreelist()
 	f.free(100, &page{id: 12})
@@ -17,7 +17,7 @@ func TestFreelist_free(t *testing.T) {
 	}
 }
 
-// Ensure that a page and its overflow is added to a transaction's freelist.
+// TestFreelist_free_overflow ensures that a page and its overflow is added to a transaction's freelist.
 func TestFreelist_free_overflow(t *testing.T) {
 	f := newFreelist()
 	f.free(100, &page{id: 12, overflow: 3})
@@ -26,7 +26,7 @@ func TestFreelist_free_overflow(t *testing.T) {
 	}
 }
 
-// Ensure that a transaction's free pages can be released.
+// TestFreelist_release ensures that a transaction's free pages can be released.
 func TestFreelist_release(t *testing.T) {
 	f := newFreelist()
 	f.free(100, &page{id: 12, overflow: 1})
@@ -44,7 +44,7 @@ func TestFreelist_release(t *testing.T) {
 	}
 }
 
-// Ensure that a freelist can find contiguous blocks of pages.
+// TestFreelist_allocate ensures that a freelist can find contiguous blocks of pages.
 func TestFreelist_allocate(t *testing.T) {
 	f := &freelist{ids: []pgid{3, 4, 5, 6, 7, 9, 12, 13, 18}}
 	if id := int(f.allocate(3)); id != 3 {
@@ -86,7 +86,7 @@ func TestFreelist_allocate(t *testing.T) {
 	}
 }
 
-// Ensure that a freelist can deserialize from a freelist page.
+// TestFreelist_read ensures that a freelist can deserialize from a freelist page.
 func TestFreelist_read(t *testing.T) {
 	// Create a page.
 	var buf [4096]byte
@@ -109,7 +109,7 @@ func TestFreelist_read(t *testing.T) {
 	}
 }
 
-// Ensure that a freelist can serialize into a freelist page.
+// TestFreelist_write ensures that a freelist can serialize into a freelist page.
 func TestFreelist_write(t *testing.T) {
 	// Create a freelist and write it to a page.
 	var buf [4096]byte

@@ -985,7 +985,7 @@ func (cmd *BenchCommand) ParseFlags(args []string) (*BenchOptions, error) {
 	return &options, nil
 }
 
-// Writes to the database.
+// runWrites; to the database.
 func (cmd *BenchCommand) runWrites(db *bolt.DB, options *BenchOptions, results *BenchResults) error {
 	// Start profiling for writes.
 	if options.ProfileMode == "rw" || options.ProfileMode == "w" {
@@ -1111,7 +1111,7 @@ func (cmd *BenchCommand) runWritesNestedWithSource(db *bolt.DB, options *BenchOp
 	return nil
 }
 
-// Reads from the database.
+// runReads; from the database.
 func (cmd *BenchCommand) runReads(db *bolt.DB, options *BenchOptions, results *BenchResults) error {
 	// Start profiling for reads.
 	if options.ProfileMode == "r" {
@@ -1214,7 +1214,7 @@ func (cmd *BenchCommand) runReadsSequentialNested(db *bolt.DB, options *BenchOpt
 // File handlers for the various profiles.
 var cpuprofile, memprofile, blockprofile *os.File
 
-// Starts all profiles set on the options.
+// startProfiling starts all profiles set on the options.
 func (cmd *BenchCommand) startProfiling(options *BenchOptions) {
 	var err error
 
@@ -1249,7 +1249,7 @@ func (cmd *BenchCommand) startProfiling(options *BenchOptions) {
 	}
 }
 
-// Stops all profiles.
+// stopProfiling stops all profiles.
 func (cmd *BenchCommand) stopProfiling() {
 	if cpuprofile != nil {
 		pprof.StopCPUProfile()
@@ -1298,7 +1298,7 @@ type BenchResults struct {
 	ReadDuration  time.Duration
 }
 
-// Returns the duration for a single write operation.
+// WriteOpDuration returns the duration for a single write operation.
 func (r *BenchResults) WriteOpDuration() time.Duration {
 	if r.WriteOps == 0 {
 		return 0
@@ -1306,7 +1306,7 @@ func (r *BenchResults) WriteOpDuration() time.Duration {
 	return r.WriteDuration / time.Duration(r.WriteOps)
 }
 
-// Returns average number of write operations that can be performed per second.
+// WriteOpsPerSecond returns average number of write operations that can be performed per second.
 func (r *BenchResults) WriteOpsPerSecond() int {
 	var op = r.WriteOpDuration()
 	if op == 0 {
@@ -1315,7 +1315,7 @@ func (r *BenchResults) WriteOpsPerSecond() int {
 	return int(time.Second) / int(op)
 }
 
-// Returns the duration for a single read operation.
+// ReadOpDuration returns the duration for a single read operation.
 func (r *BenchResults) ReadOpDuration() time.Duration {
 	if r.ReadOps == 0 {
 		return 0
@@ -1323,7 +1323,7 @@ func (r *BenchResults) ReadOpDuration() time.Duration {
 	return r.ReadDuration / time.Duration(r.ReadOps)
 }
 
-// Returns average number of read operations that can be performed per second.
+// ReadOpsPerSecond returns average number of read operations that can be performed per second.
 func (r *BenchResults) ReadOpsPerSecond() int {
 	var op = r.ReadOpDuration()
 	if op == 0 {
@@ -1476,7 +1476,7 @@ type page struct {
 	ptr      uintptr
 }
 
-// DO NOT EDIT. Copied from the "bolt" package.
+// Type; DO NOT EDIT. Copied from the "bolt" package.
 func (p *page) Type() string {
 	if (p.flags & branchPageFlag) != 0 {
 		return "branch"
@@ -1490,13 +1490,13 @@ func (p *page) Type() string {
 	return fmt.Sprintf("unknown<%02x>", p.flags)
 }
 
-// DO NOT EDIT. Copied from the "bolt" package.
+// leafPageElement; DO NOT EDIT. Copied from the "bolt" package.
 func (p *page) leafPageElement(index uint16) *leafPageElement {
 	n := &((*[0x7FFFFFF]leafPageElement)(unsafe.Pointer(&p.ptr)))[index]
 	return n
 }
 
-// DO NOT EDIT. Copied from the "bolt" package.
+// branchPageElement; DO NOT EDIT. Copied from the "bolt" package.
 func (p *page) branchPageElement(index uint16) *branchPageElement {
 	return &((*[0x7FFFFFF]branchPageElement)(unsafe.Pointer(&p.ptr)))[index]
 }
@@ -1508,7 +1508,7 @@ type branchPageElement struct {
 	pgid  pgid
 }
 
-// DO NOT EDIT. Copied from the "bolt" package.
+// key; DO NOT EDIT. Copied from the "bolt" package.
 func (n *branchPageElement) key() []byte {
 	buf := (*[maxAllocSize]byte)(unsafe.Pointer(n))
 	return buf[n.pos : n.pos+n.ksize]
@@ -1522,13 +1522,13 @@ type leafPageElement struct {
 	vsize uint32
 }
 
-// DO NOT EDIT. Copied from the "bolt" package.
+// key; DO NOT EDIT. Copied from the "bolt" package.
 func (n *leafPageElement) key() []byte {
 	buf := (*[maxAllocSize]byte)(unsafe.Pointer(n))
 	return buf[n.pos : n.pos+n.ksize]
 }
 
-// DO NOT EDIT. Copied from the "bolt" package.
+// value; DO NOT EDIT. Copied from the "bolt" package.
 func (n *leafPageElement) value() []byte {
 	buf := (*[maxAllocSize]byte)(unsafe.Pointer(n))
 	return buf[n.pos+n.ksize : n.pos+n.ksize+n.vsize]

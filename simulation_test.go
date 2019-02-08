@@ -27,7 +27,7 @@ func TestSimulate_10000op_100p(t *testing.T) { testSimulate(t, 10000, 100) }
 
 func TestSimulate_10000op_1000p(t *testing.T) { testSimulate(t, 10000, 1000) }
 
-// Randomly generate operations on a given database with multiple clients to ensure consistency and thread safety.
+// testSimulate checks a case when Randomly generate operations on a given database with multiple clients to ensure consistency and thread safety.
 func testSimulate(t *testing.T, threadCount, parallelism int) {
 	if testing.Short() {
 		t.Skip("skipping test in short mode.")
@@ -121,7 +121,7 @@ func testSimulate(t *testing.T, threadCount, parallelism int) {
 
 type simulateHandler func(tx *bolt.Tx, qdb *QuickDB)
 
-// Retrieves a key from the database and verifies that it is what is expected.
+// simulateGetHandler retrieves a key from the database and verifies that it is what is expected.
 func simulateGetHandler(tx *bolt.Tx, qdb *QuickDB) {
 	// Randomly retrieve an existing exist.
 	keys := qdb.Rand()
@@ -156,7 +156,7 @@ func simulateGetHandler(tx *bolt.Tx, qdb *QuickDB) {
 	}
 }
 
-// Inserts a key into the database.
+// simulatePutHandler inserts a key into the database.
 func simulatePutHandler(tx *bolt.Tx, qdb *QuickDB) {
 	var err error
 	keys, value := randKeys(), randValue()

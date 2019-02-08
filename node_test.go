@@ -5,7 +5,7 @@ import (
 	"unsafe"
 )
 
-// Ensure that a node can insert a key/value.
+// TestNode_put ensures that a node can insert a key/value.
 func TestNode_put(t *testing.T) {
 	n := &node{inodes: make(inodes, 0), bucket: &Bucket{tx: &Tx{meta: &meta{pgid: 1}}}}
 	n.put([]byte("baz"), []byte("baz"), []byte("2"), 0, 0)
@@ -30,7 +30,7 @@ func TestNode_put(t *testing.T) {
 	}
 }
 
-// Ensure that a node can deserialize from a leaf page.
+// TestNode_read_LeafPage ensures that a node can deserialize from a leaf page.
 func TestNode_read_LeafPage(t *testing.T) {
 	// Create a page.
 	var buf [4096]byte
@@ -67,7 +67,7 @@ func TestNode_read_LeafPage(t *testing.T) {
 	}
 }
 
-// Ensure that a node can serialize into a leaf page.
+// TestNode_write_LeafPage ensures that a node can serialize into a leaf page.
 func TestNode_write_LeafPage(t *testing.T) {
 	// Create a node.
 	n := &node{isLeaf: true, inodes: make(inodes, 0), bucket: &Bucket{tx: &Tx{db: &DB{}, meta: &meta{pgid: 1}}}}
@@ -99,7 +99,7 @@ func TestNode_write_LeafPage(t *testing.T) {
 	}
 }
 
-// Ensure that a node can split into appropriate subgroups.
+// TestNode_split ensures that a node can split into appropriate subgroups.
 func TestNode_split(t *testing.T) {
 	// Create a node.
 	n := &node{inodes: make(inodes, 0), bucket: &Bucket{tx: &Tx{db: &DB{}, meta: &meta{pgid: 1}}}}
@@ -124,7 +124,7 @@ func TestNode_split(t *testing.T) {
 	}
 }
 
-// Ensure that a page with the minimum number of inodes just returns a single node.
+// TestNode_split_MinKeys ensures that a page with the minimum number of inodes just returns a single node.
 func TestNode_split_MinKeys(t *testing.T) {
 	// Create a node.
 	n := &node{inodes: make(inodes, 0), bucket: &Bucket{tx: &Tx{db: &DB{}, meta: &meta{pgid: 1}}}}
@@ -138,7 +138,7 @@ func TestNode_split_MinKeys(t *testing.T) {
 	}
 }
 
-// Ensure that a node that has keys that all fit on a page just returns one leaf.
+// TestNode_split_SinglePage ensures that a node that has keys that all fit on a page just returns one leaf.
 func TestNode_split_SinglePage(t *testing.T) {
 	// Create a node.
 	n := &node{inodes: make(inodes, 0), bucket: &Bucket{tx: &Tx{db: &DB{}, meta: &meta{pgid: 1}}}}

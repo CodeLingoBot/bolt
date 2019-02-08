@@ -14,7 +14,7 @@ import (
 	"github.com/boltdb/bolt"
 )
 
-// Ensure that a cursor can return a reference to the bucket that created it.
+// TestCursor_Bucket ensures that a cursor can return a reference to the bucket that created it.
 func TestCursor_Bucket(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -32,7 +32,7 @@ func TestCursor_Bucket(t *testing.T) {
 	}
 }
 
-// Ensure that a Tx cursor can seek to the appropriate keys.
+// TestCursor_Seek ensures that a Tx cursor can seek to the appropriate keys.
 func TestCursor_Seek(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -161,7 +161,7 @@ func TestCursor_Delete(t *testing.T) {
 	}
 }
 
-// Ensure that a Tx cursor can seek to the appropriate keys when there are a
+// TestCursor_Seek_Large ensures that a Tx cursor can seek to the appropriate keys when there are a
 // large number of keys. This test also checks that seek will always move
 // forward to the next key.
 //
@@ -229,7 +229,7 @@ func TestCursor_Seek_Large(t *testing.T) {
 	}
 }
 
-// Ensure that a cursor can iterate over an empty bucket without error.
+// TestCursor_EmptyBucket ensures that a cursor can iterate over an empty bucket without error.
 func TestCursor_EmptyBucket(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -254,7 +254,7 @@ func TestCursor_EmptyBucket(t *testing.T) {
 	}
 }
 
-// Ensure that a Tx cursor can reverse iterate over an empty bucket without error.
+// TestCursor_EmptyBucketReverse ensures that a Tx cursor can reverse iterate over an empty bucket without error.
 func TestCursor_EmptyBucketReverse(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -279,7 +279,7 @@ func TestCursor_EmptyBucketReverse(t *testing.T) {
 	}
 }
 
-// Ensure that a Tx cursor can iterate over a single root with a couple elements.
+// TestCursor_Iterate_Leaf ensures that a Tx cursor can iterate over a single root with a couple elements.
 func TestCursor_Iterate_Leaf(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -350,7 +350,7 @@ func TestCursor_Iterate_Leaf(t *testing.T) {
 	}
 }
 
-// Ensure that a Tx cursor can iterate in reverse over a single root with a couple elements.
+// TestCursor_LeafRootReverse ensures that a Tx cursor can iterate in reverse over a single root with a couple elements.
 func TestCursor_LeafRootReverse(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -414,7 +414,7 @@ func TestCursor_LeafRootReverse(t *testing.T) {
 	}
 }
 
-// Ensure that a Tx cursor can restart from the beginning.
+// TestCursor_Restart ensures that a Tx cursor can restart from the beginning.
 func TestCursor_Restart(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -460,7 +460,7 @@ func TestCursor_Restart(t *testing.T) {
 	}
 }
 
-// Ensure that a cursor can skip over empty pages that have been deleted.
+// TestCursor_First_EmptyPages ensures that a cursor can skip over empty pages that have been deleted.
 func TestCursor_First_EmptyPages(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -507,7 +507,7 @@ func TestCursor_First_EmptyPages(t *testing.T) {
 	}
 }
 
-// Ensure that a Tx can iterate over all elements in a bucket.
+// TestCursor_QuickCheck ensures that a Tx can iterate over all elements in a bucket.
 func TestCursor_QuickCheck(t *testing.T) {
 	f := func(items testdata) bool {
 		db := MustOpenDB()
@@ -565,7 +565,7 @@ func TestCursor_QuickCheck(t *testing.T) {
 	}
 }
 
-// Ensure that a transaction can iterate over all elements in a bucket in reverse.
+// TestCursor_QuickCheck_Reverse ensures that a transaction can iterate over all elements in a bucket in reverse.
 func TestCursor_QuickCheck_Reverse(t *testing.T) {
 	f := func(items testdata) bool {
 		db := MustOpenDB()
@@ -622,7 +622,7 @@ func TestCursor_QuickCheck_Reverse(t *testing.T) {
 	}
 }
 
-// Ensure that a Tx cursor can iterate over subbuckets.
+// TestCursor_QuickCheck_BucketsOnly ensures that a Tx cursor can iterate over subbuckets.
 func TestCursor_QuickCheck_BucketsOnly(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -664,7 +664,7 @@ func TestCursor_QuickCheck_BucketsOnly(t *testing.T) {
 	}
 }
 
-// Ensure that a Tx cursor can reverse iterate over subbuckets.
+// TestCursor_QuickCheck_BucketsOnly_Reverse ensures that a Tx cursor can reverse iterate over subbuckets.
 func TestCursor_QuickCheck_BucketsOnly_Reverse(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()

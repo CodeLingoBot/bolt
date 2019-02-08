@@ -16,7 +16,7 @@ import (
 	"github.com/boltdb/bolt"
 )
 
-// Ensure that a bucket that gets a non-existent key returns nil.
+// TestBucket_Get_NonExistent ensures that a bucket that gets a non-existent key returns nil.
 func TestBucket_Get_NonExistent(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -35,7 +35,7 @@ func TestBucket_Get_NonExistent(t *testing.T) {
 	}
 }
 
-// Ensure that a bucket can read a value that is not flushed yet.
+// TestBucket_Get_FromNode ensures that a bucket can read a value that is not flushed yet.
 func TestBucket_Get_FromNode(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -57,7 +57,7 @@ func TestBucket_Get_FromNode(t *testing.T) {
 	}
 }
 
-// Ensure that a bucket retrieved via Get() returns a nil.
+// TestBucket_Get_IncompatibleValue ensures that a bucket retrieved via Get() returns a nil.
 func TestBucket_Get_IncompatibleValue(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -80,7 +80,7 @@ func TestBucket_Get_IncompatibleValue(t *testing.T) {
 	}
 }
 
-// Ensure that a slice returned from a bucket has a capacity equal to its length.
+// TestBucket_Get_Capacity ensures that a slice returned from a bucket has a capacity equal to its length.
 // This also allows slices to be appended to since it will require a realloc by Go.
 //
 // https://github.com/boltdb/bolt/issues/544
@@ -120,7 +120,7 @@ func TestBucket_Get_Capacity(t *testing.T) {
 	}
 }
 
-// Ensure that a bucket can write a key/value.
+// TestBucket_Put ensures that a bucket can write a key/value.
 func TestBucket_Put(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -143,7 +143,7 @@ func TestBucket_Put(t *testing.T) {
 	}
 }
 
-// Ensure that a bucket can rewrite a key in the same transaction.
+// TestBucket_Put_Repeat ensures that a bucket can rewrite a key in the same transaction.
 func TestBucket_Put_Repeat(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -169,7 +169,7 @@ func TestBucket_Put_Repeat(t *testing.T) {
 	}
 }
 
-// Ensure that a bucket can write a bunch of large values.
+// TestBucket_Put_Large ensures that a bucket can write a bunch of large values.
 func TestBucket_Put_Large(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -204,7 +204,7 @@ func TestBucket_Put_Large(t *testing.T) {
 	}
 }
 
-// Ensure that a database can perform multiple large appends safely.
+// TestDB_Put_VeryLarge ensures that a database can perform multiple large appends safely.
 func TestDB_Put_VeryLarge(t *testing.T) {
 	if testing.Short() {
 		t.Skip("skipping test in short mode.")
@@ -236,7 +236,7 @@ func TestDB_Put_VeryLarge(t *testing.T) {
 	}
 }
 
-// Ensure that a setting a value on a key with a bucket value returns an error.
+// TestBucket_Put_IncompatibleValue ensures that a setting a value on a key with a bucket value returns an error.
 func TestBucket_Put_IncompatibleValue(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -259,7 +259,7 @@ func TestBucket_Put_IncompatibleValue(t *testing.T) {
 	}
 }
 
-// Ensure that a setting a value while the transaction is closed returns an error.
+// TestBucket_Put_Closed ensures that a setting a value while the transaction is closed returns an error.
 func TestBucket_Put_Closed(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -282,7 +282,7 @@ func TestBucket_Put_Closed(t *testing.T) {
 	}
 }
 
-// Ensure that setting a value on a read-only bucket returns an error.
+// TestBucket_Put_ReadOnly ensures that setting a value on a read-only bucket returns an error.
 func TestBucket_Put_ReadOnly(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -307,7 +307,7 @@ func TestBucket_Put_ReadOnly(t *testing.T) {
 	}
 }
 
-// Ensure that a bucket can delete an existing key.
+// TestBucket_Delete ensures that a bucket can delete an existing key.
 func TestBucket_Delete(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -332,7 +332,7 @@ func TestBucket_Delete(t *testing.T) {
 	}
 }
 
-// Ensure that deleting a large set of keys will work correctly.
+// TestBucket_Delete_Large ensures that deleting a large set of keys will work correctly.
 func TestBucket_Delete_Large(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -379,7 +379,7 @@ func TestBucket_Delete_Large(t *testing.T) {
 	}
 }
 
-// Deleting a very large list of keys will cause the freelist to use overflow.
+// TestBucket_Delete_FreelistOverflow checks a case when Deleting a very large list of keys will cause the freelist to use overflow.
 func TestBucket_Delete_FreelistOverflow(t *testing.T) {
 	if testing.Short() {
 		t.Skip("skipping test in short mode.")
@@ -425,7 +425,7 @@ func TestBucket_Delete_FreelistOverflow(t *testing.T) {
 	}
 }
 
-// Ensure that accessing and updating nested buckets is ok across transactions.
+// TestBucket_Nested ensures that accessing and updating nested buckets is ok across transactions.
 func TestBucket_Nested(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -512,7 +512,7 @@ func TestBucket_Nested(t *testing.T) {
 	}
 }
 
-// Ensure that deleting a bucket using Delete() returns an error.
+// TestBucket_Delete_Bucket ensures that deleting a bucket using Delete() returns an error.
 func TestBucket_Delete_Bucket(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -533,7 +533,7 @@ func TestBucket_Delete_Bucket(t *testing.T) {
 	}
 }
 
-// Ensure that deleting a key on a read-only bucket returns an error.
+// TestBucket_Delete_ReadOnly ensures that deleting a key on a read-only bucket returns an error.
 func TestBucket_Delete_ReadOnly(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -557,7 +557,7 @@ func TestBucket_Delete_ReadOnly(t *testing.T) {
 	}
 }
 
-// Ensure that a deleting value while the transaction is closed returns an error.
+// TestBucket_Delete_Closed ensures that a deleting value while the transaction is closed returns an error.
 func TestBucket_Delete_Closed(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -580,7 +580,7 @@ func TestBucket_Delete_Closed(t *testing.T) {
 	}
 }
 
-// Ensure that deleting a bucket causes nested buckets to be deleted.
+// TestBucket_DeleteBucket_Nested ensures that deleting a bucket causes nested buckets to be deleted.
 func TestBucket_DeleteBucket_Nested(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -612,7 +612,7 @@ func TestBucket_DeleteBucket_Nested(t *testing.T) {
 	}
 }
 
-// Ensure that deleting a bucket causes nested buckets to be deleted after they have been committed.
+// TestBucket_DeleteBucket_Nested2 ensures that deleting a bucket causes nested buckets to be deleted after they have been committed.
 func TestBucket_DeleteBucket_Nested2(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -678,7 +678,7 @@ func TestBucket_DeleteBucket_Nested2(t *testing.T) {
 	}
 }
 
-// Ensure that deleting a child bucket with multiple pages causes all pages to get collected.
+// TestBucket_DeleteBucket_Large ensures that deleting a child bucket with multiple pages causes all pages to get collected.
 // NOTE: Consistency check in bolt_test.DB.Close() will panic if pages not freed properly.
 func TestBucket_DeleteBucket_Large(t *testing.T) {
 	db := MustOpenDB()
@@ -715,7 +715,7 @@ func TestBucket_DeleteBucket_Large(t *testing.T) {
 	}
 }
 
-// Ensure that a simple value retrieved via Bucket() returns a nil.
+// TestBucket_Bucket_IncompatibleValue ensures that a simple value retrieved via Bucket() returns a nil.
 func TestBucket_Bucket_IncompatibleValue(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -738,7 +738,7 @@ func TestBucket_Bucket_IncompatibleValue(t *testing.T) {
 	}
 }
 
-// Ensure that creating a bucket on an existing non-bucket key returns an error.
+// TestBucket_CreateBucket_IncompatibleValue ensures that creating a bucket on an existing non-bucket key returns an error.
 func TestBucket_CreateBucket_IncompatibleValue(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -760,7 +760,7 @@ func TestBucket_CreateBucket_IncompatibleValue(t *testing.T) {
 	}
 }
 
-// Ensure that deleting a bucket on an existing non-bucket key returns an error.
+// TestBucket_DeleteBucket_IncompatibleValue ensures that deleting a bucket on an existing non-bucket key returns an error.
 func TestBucket_DeleteBucket_IncompatibleValue(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -782,7 +782,7 @@ func TestBucket_DeleteBucket_IncompatibleValue(t *testing.T) {
 	}
 }
 
-// Ensure bucket can set and update its sequence number.
+// TestBucket_Sequence ensures bucket can set and update its sequence number.
 func TestBucket_Sequence(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -824,7 +824,7 @@ func TestBucket_Sequence(t *testing.T) {
 	}
 }
 
-// Ensure that a bucket can return an autoincrementing sequence.
+// TestBucket_NextSequence ensures that a bucket can return an autoincrementing sequence.
 func TestBucket_NextSequence(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -865,7 +865,7 @@ func TestBucket_NextSequence(t *testing.T) {
 	}
 }
 
-// Ensure that a bucket will persist an autoincrementing sequence even if its
+// TestBucket_NextSequence_Persist ensures that a bucket will persist an autoincrementing sequence even if its
 // the only thing updated on the bucket.
 // https://github.com/boltdb/bolt/issues/296
 func TestBucket_NextSequence_Persist(t *testing.T) {
@@ -903,7 +903,7 @@ func TestBucket_NextSequence_Persist(t *testing.T) {
 	}
 }
 
-// Ensure that retrieving the next sequence on a read-only bucket returns an error.
+// TestBucket_NextSequence_ReadOnly ensures that retrieving the next sequence on a read-only bucket returns an error.
 func TestBucket_NextSequence_ReadOnly(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -928,7 +928,7 @@ func TestBucket_NextSequence_ReadOnly(t *testing.T) {
 	}
 }
 
-// Ensure that retrieving the next sequence for a bucket on a closed database return an error.
+// TestBucket_NextSequence_Closed ensures that retrieving the next sequence for a bucket on a closed database return an error.
 func TestBucket_NextSequence_Closed(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -948,7 +948,7 @@ func TestBucket_NextSequence_Closed(t *testing.T) {
 	}
 }
 
-// Ensure a user can loop over all key/value pairs in a bucket.
+// TestBucket_ForEach ensures a user can loop over all key/value pairs in a bucket.
 func TestBucket_ForEach(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -1006,7 +1006,7 @@ func TestBucket_ForEach(t *testing.T) {
 	}
 }
 
-// Ensure a database can stop iteration early.
+// TestBucket_ForEach_ShortCircuit ensures a database can stop iteration early.
 func TestBucket_ForEach_ShortCircuit(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -1045,7 +1045,7 @@ func TestBucket_ForEach_ShortCircuit(t *testing.T) {
 	}
 }
 
-// Ensure that looping over a bucket on a closed database returns an error.
+// TestBucket_ForEach_Closed ensures that looping over a bucket on a closed database returns an error.
 func TestBucket_ForEach_Closed(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -1069,7 +1069,7 @@ func TestBucket_ForEach_Closed(t *testing.T) {
 	}
 }
 
-// Ensure that an error is returned when inserting with an empty key.
+// TestBucket_Put_EmptyKey ensures that an error is returned when inserting with an empty key.
 func TestBucket_Put_EmptyKey(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -1091,7 +1091,7 @@ func TestBucket_Put_EmptyKey(t *testing.T) {
 	}
 }
 
-// Ensure that an error is returned when inserting with a key that's too large.
+// TestBucket_Put_KeyTooLarge ensures that an error is returned when inserting with a key that's too large.
 func TestBucket_Put_KeyTooLarge(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -1109,7 +1109,7 @@ func TestBucket_Put_KeyTooLarge(t *testing.T) {
 	}
 }
 
-// Ensure that an error is returned when inserting a value that's too large.
+// TestBucket_Put_ValueTooLarge ensures that an error is returned when inserting a value that's too large.
 func TestBucket_Put_ValueTooLarge(t *testing.T) {
 	// Skip this test on DroneCI because the machine is resource constrained.
 	if os.Getenv("DRONE") == "true" {
@@ -1133,7 +1133,7 @@ func TestBucket_Put_ValueTooLarge(t *testing.T) {
 	}
 }
 
-// Ensure a bucket can calculate stats.
+// TestBucket_Stats ensures a bucket can calculate stats.
 func TestBucket_Stats(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -1220,7 +1220,7 @@ func TestBucket_Stats(t *testing.T) {
 	}
 }
 
-// Ensure a bucket with random insertion utilizes fill percentage correctly.
+// TestBucket_Stats_RandomFill ensures a bucket with random insertion utilizes fill percentage correctly.
 func TestBucket_Stats_RandomFill(t *testing.T) {
 	if testing.Short() {
 		t.Skip("skipping test in short mode.")
@@ -1288,7 +1288,7 @@ func TestBucket_Stats_RandomFill(t *testing.T) {
 	}
 }
 
-// Ensure a bucket can calculate stats.
+// TestBucket_Stats_Small ensures a bucket can calculate stats.
 func TestBucket_Stats_Small(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -1412,7 +1412,7 @@ func TestBucket_Stats_EmptyBucket(t *testing.T) {
 	}
 }
 
-// Ensure a bucket can calculate stats.
+// TestBucket_Stats_Nested ensures a bucket can calculate stats.
 func TestBucket_Stats_Nested(t *testing.T) {
 	db := MustOpenDB()
 	defer db.MustClose()
@@ -1514,7 +1514,7 @@ func TestBucket_Stats_Nested(t *testing.T) {
 	}
 }
 
-// Ensure a large bucket can calculate stats.
+// TestBucket_Stats_Large ensures a large bucket can calculate stats.
 func TestBucket_Stats_Large(t *testing.T) {
 	if testing.Short() {
 		t.Skip("skipping test in short mode.")
@@ -1587,7 +1587,7 @@ func TestBucket_Stats_Large(t *testing.T) {
 	}
 }
 
-// Ensure that a bucket can write random keys and values across multiple transactions.
+// TestBucket_Put_Single ensures that a bucket can write random keys and values across multiple transactions.
 func TestBucket_Put_Single(t *testing.T) {
 	if testing.Short() {
 		t.Skip("skipping test in short mode.")
@@ -1645,7 +1645,7 @@ func TestBucket_Put_Single(t *testing.T) {
 	}
 }
 
-// Ensure that a transaction can insert multiple key/value pairs at once.
+// TestBucket_Put_Multiple ensures that a transaction can insert multiple key/value pairs at once.
 func TestBucket_Put_Multiple(t *testing.T) {
 	if testing.Short() {
 		t.Skip("skipping test in short mode.")
@@ -1698,7 +1698,7 @@ func TestBucket_Put_Multiple(t *testing.T) {
 	}
 }
 
-// Ensure that a transaction can delete all key/value pairs and return to a single leaf page.
+// TestBucket_Delete_Quick ensures that a transaction can delete all key/value pairs and return to a single leaf page.
 func TestBucket_Delete_Quick(t *testing.T) {
 	if testing.Short() {
 		t.Skip("skipping test in short mode.")

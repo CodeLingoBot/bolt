@@ -782,7 +782,7 @@ func (db *DB) Stats() Stats {
 	return db.stats
 }
 
-// This is for internal access to the raw data bytes from the C cursor, use
+// Info is for internal access to the raw data bytes from the C cursor, use
 // carefully, or not at all.
 func (db *DB) Info() *Info {
 	return &Info{uintptr(unsafe.Pointer(&db.data[0])), db.pageSize}
@@ -1014,7 +1014,7 @@ func (m *meta) write(p *page) {
 	m.copy(p.meta())
 }
 
-// generates the checksum for the meta.
+// sum64 generates the checksum for the meta.
 func (m *meta) sum64() uint64 {
 	var h = fnv.New64a()
 	_, _ = h.Write((*[unsafe.Offsetof(meta{}.checksum)]byte)(unsafe.Pointer(m))[:])

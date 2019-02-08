@@ -507,7 +507,7 @@ func (n *node) rebalance() {
 	n.parent.rebalance()
 }
 
-// removes a node from the list of in-memory children.
+// removeChild removes a node from the list of in-memory children.
 // This does not affect the inodes.
 func (n *node) removeChild(target *node) {
 	for i, child := range n.children {

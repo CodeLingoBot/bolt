@@ -16,7 +16,7 @@ import (
 	"github.com/boltdb/bolt/cmd/bolt"
 )
 
-// Ensure the "info" command can print information about a database.
+// TestInfoCommand_Run ensures the "info" command can print information about a database.
 func TestInfoCommand_Run(t *testing.T) {
 	db := MustOpen(0666, nil)
 	db.DB.Close()
@@ -29,7 +29,7 @@ func TestInfoCommand_Run(t *testing.T) {
 	}
 }
 
-// Ensure the "stats" command executes correctly with an empty database.
+// TestStatsCommand_Run_EmptyDatabase ensures the "stats" command executes correctly with an empty database.
 func TestStatsCommand_Run_EmptyDatabase(t *testing.T) {
 	// Ignore
 	if os.Getpagesize() != 4096 {
@@ -69,7 +69,7 @@ func TestStatsCommand_Run_EmptyDatabase(t *testing.T) {
 	}
 }
 
-// Ensure the "stats" command can execute correctly.
+// TestStatsCommand_Run ensures the "stats" command can execute correctly.
 func TestStatsCommand_Run(t *testing.T) {
 	// Ignore
 	if os.Getpagesize() != 4096 {
